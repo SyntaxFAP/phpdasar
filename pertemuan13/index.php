@@ -1,13 +1,14 @@
 <?php 
 require "functions.php";
-$siswa = query("SELECT * FROM dataSiswa");
 
-// tombol cari ditekan
-if (isset($_POST['cari'])){
+// mengambil data dari tabel siswa  / query data siswa
+$siswa = query("SELECT * FROM siswa");
+
+if ( isset($_POST["cari"]) ) {
     $siswa = cari($_POST["keyword"]);
 }
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,43 +19,42 @@ if (isset($_POST['cari'])){
 <body>
     <h1>Daftar Siswa</h1>
 
-    <a href="tambah.php">Tambah data siswa</a>
-    <br><br>
+    <a href="tambah.php">Tambah data siswa</a> |
+    <a href="hapusSemua.php" onclick="return confirm('hapus semua data?')">Hapus Semua Data</a>
 
-    <form action="" method="post">
-        <input type="text" name="keyword" size="40" placeholder="Masukkan keyword pencarian.." autocomplete="off" autofocus>
-        <button type="submit" name="cari">Cari</button>
+    <form action="" method="post" style="margin: 10px 0px;">
+        <input type="text" name="keyword" placeholder="masukkan keyword pencarian..." size="40" autofocus autocomplete="off">
+        <button type="submit" name="cari">cari!</button>
     </form>
 
-    <br>
-
     <table border="1" cellpadding="10" cellspacing="0">
-
-        <tr>
+        <thead>
             <th>No.</th>
+            <th>Aksi</th>
             <th>Gambar</th>
             <th>Nama</th>
             <th>NIS</th>
-            <th>Rayon</th>
-            <th>Action</th>
-        </tr>
-
-        <?php $angka = 1; ?>
-        <?php foreach($siswa as $row) : ?>
-        <tr>
-            <td><?= $angka; ?></td>
-            <td><?= $row['gambar'] ?></td>
-            <td><?= $row['nama'] ?></td>
-            <td><?= $row['nis'] ?></td>
-            <td><?= $row['rayon'] ?></td>
+            <th>Email</th>
+            <th>Jurusan</th>
+        </thead>
+        <?php $numbers = 1;  ?>
+        <?php  foreach ( $siswa as $row  ) : ?>
+        <tbody>
+            <td><?= $numbers ?></td>
             <td>
-                <a href="ubah.php?id=<?= $row['id'];?>">Ubah</a> |
-                <a href="hapus.php?id=<?= $row['id'];?>" onclick="return confirm('Yakin?')">Hapus</a>
+                <a href="ubah.php?id=<?= $row["id"] ?>">ubah</a> | 
+                <a href="hapus.php?id=<?= $row["id"] ?>" onclick="return confirm('Hapus?')">hapus</a>
             </td>
-        </tr>
-        <?php $angka++; ?>
-        <?php endforeach; ?>
-
+            <td>
+                <img src="img/<?= $row["gambar"] ?>" alt="me" width="50">
+            </td>
+            <td><?= $row["nama"] ?></td>
+            <td><?= $row["nis"] ?></td>
+            <td><?= $row["email"] ?></td>
+            <td><?= $row["jurusan"] ?></td>
+        </tbody>
+        <?php $numbers++;  ?>
+        <?php endforeach;  ?>
     </table>
 </body>
 </html>

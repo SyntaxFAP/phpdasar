@@ -1,15 +1,10 @@
 <?php 
 require "functions.php";
-$siswa = query("SELECT * FROM dataSiswa");
 
+// mengambil data dari tabel siswa  / query data siswa
+$siswa = query();
 
-// ambil data dari (fetch) siswa dari object result
-// mysqli_fetch_row() // mengembalikkan array numerik
-// mysqli_fetch_assoc() // mengembalikkan array associative
-// mysqli_fetch_array() // mengembalikkan keduannya
-// mysqli_fetch_object() // mengembalikkan object
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,32 +16,33 @@ $siswa = query("SELECT * FROM dataSiswa");
     <h1>Daftar Siswa</h1>
 
     <table border="1" cellpadding="10" cellspacing="0">
-
-        <tr>
+        <thead>
             <th>No.</th>
+            <th>Aksi</th>
             <th>Gambar</th>
             <th>Nama</th>
             <th>NIS</th>
-            <th>Rayon</th>
-            <th>Action</th>
-        </tr>
-
-        <?php $angka = 1; ?>
+            <th>Email</th>
+            <th>Jurusan</th>
+        </thead>
+        <?php $numbers = 1;  ?>
         <?php foreach($siswa as $row) : ?>
-        <tr>
-            <td><?= $angka; ?></td>
-            <td><?= $row['gambar'] ?></td>
-            <td><?= $row['nama'] ?></td>
-            <td><?= $row['nis'] ?></td>
-            <td><?= $row['rayon'] ?></td>
+        <tbody>
+            <td><?= $numbers ?></td>
             <td>
-                <a href="">Ubah</a>
-                <a href="">Hapus</a>
+                <a href="">ubah</a> | 
+                <a href="">hapus</a>
             </td>
-        </tr>
-        <?php $angka++; ?>
-        <?php endforeach; ?>
-
+            <td>
+                <img src="img/<?= $row["gambar"] ?>" alt="me" width="50">
+            </td>
+            <td><?= $row["nama"] ?></td>
+            <td><?= $row["nis"] ?></td>
+            <td><?= $row["email"] ?></td>
+            <td><?= $row["jurusan"] ?></td>
+        </tbody>
+        <?php $numbers++;  ?>
+        <?php endforeach;  ?>
     </table>
 </body>
 </html>
